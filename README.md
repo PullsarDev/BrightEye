@@ -5,9 +5,8 @@
 ## Table of Contents
 
 ---
-
 **Table of Contents**:
-<img align="right" width="55%" height="70%" src="https://github.com/user-attachments/assets/214d10e1-1de1-4c0e-a5fe-660d765bb451">
+<img align="right" width="55%" height="70%" src="https://github.com/user-attachments/assets/e4fb7f54-fd5a-4b17-9fc8-a88f56716d3b">
 <br>
 
 > 1. [Introduction to Bright Eye](#bright-eye-plugin)
