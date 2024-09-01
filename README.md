@@ -116,7 +116,7 @@ To customize the keyboard shortcuts for Bright Eye:
 
 ## Contribution
 
-Contributions are welcome! If you'd like to report a bug, suggest a feature, or submit a pull request, please check the [Issues](https://github.com/PullsarDev/BrightEyePrivate/issues) section first.
+Contributions are welcome! If you'd like to report a bug, suggest a feature, or submit a pull request, please check the [Issues](https://github.com/PullsarDev/BrightEye/issues) section first.
 
 ## License
 
