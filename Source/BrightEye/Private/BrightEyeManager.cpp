@@ -495,7 +495,7 @@ void FBrightEyeManagerImp::OnToggleControlPanel()
 		}
 		else
 		{
-			RemoveControlPanel(); // Better replace with DestroyControlPanel(); when modifying the widget
+			DestroyControlPanel();
 		}
 	}
 }
