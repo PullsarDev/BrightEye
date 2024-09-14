@@ -51,6 +51,7 @@ private:
 	UUserWidget* GetControlPanel();
 
 	void InitializePanel();
+	void RefreshColorPicker();
 	void BindPanelDelegates();
 	void UnbindPanelDelegates() const;
 	void InitializePanelParams() const;

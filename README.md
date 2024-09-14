@@ -3,10 +3,9 @@
 **Bright Eye** is a lightweight and free Unreal Engine plugin designed for level designers and artists who need an easily accessible light source while working within the editor. It attaches a light source directly to the viewport camera, allowing users to quickly illuminate dark areas without the need to place temporary lights. By providing customizable shortcuts and settings, Bright Eye offers a flexible workflow that adapts to the user's needs, streamlining the level design process.
 
 ## Table of Contents
-
----
-**Table of Contents**:
-<img align="right" width="55%" height="70%" src="https://github.com/user-attachments/assets/e4fb7f54-fd5a-4b17-9fc8-a88f56716d3b">
+<a href="https://youtu.be/81p3FSxmOLA" target="_blank">
+  <img align="right" width="50%" src="https://github.com/user-attachments/assets/8c8eb572-5330-4328-9726-fc8f7e7556a5" alt="Watch Bright Eye Plugin Tutorial on YouTube">
+</a>
 <br>
 
 > 1. [Introduction to Bright Eye](#bright-eye-plugin)
@@ -125,14 +124,15 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For any questions or further information, feel free to contact me:
 
-- **Email**: akpinarab@gmail.com
-- **GitHub**: [github.com/PullsarDev](https://github.com/PullsarDev)
-- **Linkedin**: [linkedin.com/akpinarab](https://www.linkedin.com/in/akpinarab/)
+- **Email**: pullsarb@gmail.com
+- **Website**: [Pullsar.Dev](https://pullsar.dev/)
 
 ## Credits
 
-This plugin uses icons from [Flaticon](https://www.flaticon.com) under the [Flaticon License](https://www.flaticon.com/media/license/license.pdf).
+**Flaticon Icons**: This plugin uses icons from [Flaticon](https://www.flaticon.com) under the [Flaticon License](https://www.flaticon.com/media/license/license.pdf).
+
+**Leartes Studios Assets**: Special thanks to [Leartes Studios](https://leartesstudios.com/) for their [Horror Mansion Environment](https://cosmos.leartesstudios.com/products/horror-mansion) package, which was used in creating the plugin's tutorial.
 
 ## Disclaimer
 
-Unreal Engine and its logo are trademarks or registered trademarks of Epic Games, Inc. in the United States of America and elsewhere. All rights reserved. This plugin is not affiliated with or endorsed by Epic Games.
+Unreal Engine and its logo are trademarks or registered trademarks of **Epic Games**, Inc. in the United States of America and elsewhere. All rights reserved. This plugin is not affiliated with or endorsed by **Epic Games**.

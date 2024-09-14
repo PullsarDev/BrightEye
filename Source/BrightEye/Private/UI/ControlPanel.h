@@ -22,8 +22,6 @@ class BRIGHTEYE_API UBEControlPanel : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void InitializePanel();
-	
 	virtual void NativeDestruct() override;
 
 protected:
@@ -74,5 +72,6 @@ public:
 	void SmoothCameraRotationStateChanged();
 
 	FOnSmoothRotationToggled& GetOnDelayStateChanged();
-	
+
+	bool InitializeTheColorPicker();
 };

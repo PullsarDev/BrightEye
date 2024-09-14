@@ -16,10 +16,10 @@
 #include "Data/ColorPicker.h"
 #include "UI/ScalarEntry.h"
 
-constexpr float MAX_DELAY_SPEED = 40.0f;
-constexpr float MIN_DELAY_SPEED = 4.0f;
-
 TSharedPtr<FBrightEyeManagerImp> FBrightEyeManager::BrightEyeManagerImp;
+
+static constexpr float MAX_DELAY_SPEED = 40.0f;
+static constexpr float MIN_DELAY_SPEED = 4.0f;
 
 static constexpr float ConfigSaveInterval = 1.0f;
 
@@ -495,7 +495,7 @@ void FBrightEyeManagerImp::OnToggleControlPanel()
 		}
 		else
 		{
-			DestroyControlPanel();
+			RemoveControlPanel();
 		}
 	}
 }
@@ -600,22 +600,41 @@ UUserWidget* FBrightEyeManagerImp::GetControlPanel()
 
 void FBrightEyeManagerImp::InitializePanel()
 {
-	ControlPanelWidget->InitializePanel();
+	RefreshColorPicker();
 	
 	BindPanelDelegates();
 	
 	InitializePanelParams();
 }
 
+void FBrightEyeManagerImp::RefreshColorPicker()
+{
+	if(IsValid(ControlPanelWidget))
+	{
+		if(ControlPanelWidget->InitializeTheColorPicker())
+		{
+			ControlPanelWidget->GetColorPicker()->GetOnParamChangedDelegate().BindRaw(this, &FBrightEyeManagerImp::OnColorParamChanged);
+
+			if(const UBESettings* ToolSettings = UBESettings::GetInstance())
+			{
+				ControlPanelWidget->GetColorPicker()->InitializeColor(ToolSettings->Color);
+			}
+		}
+	}
+}
+
 void FBrightEyeManagerImp::BindPanelDelegates()
 {
 	if(!IsValid(ControlPanelWidget)){return;}
+
+	if (IsValid(ControlPanelWidget->GetBrightnessEntry())) {ControlPanelWidget->GetBrightnessEntry()->GetOnParamChangedDelegate().BindRaw(this, &FBrightEyeManagerImp::OnScalarParamChanged, EBEScalarParamType::Brightness);}
+
+	if (IsValid(ControlPanelWidget->GetDistanceEntry())) {ControlPanelWidget->GetDistanceEntry()->GetOnParamChangedDelegate().BindRaw(this, &FBrightEyeManagerImp::OnScalarParamChanged, EBEScalarParamType::Distance);}
+
+	if (IsValid(ControlPanelWidget->GetRadiusEntry())) {ControlPanelWidget->GetRadiusEntry()->GetOnParamChangedDelegate().BindRaw(this, &FBrightEyeManagerImp::OnScalarParamChanged, EBEScalarParamType::Radius);}
 	
-	ControlPanelWidget->GetBrightnessEntry()->GetOnParamChangedDelegate().BindRaw(this,&FBrightEyeManagerImp::OnScalarParamChanged,EBEScalarParamType::Brightness);
-	ControlPanelWidget->GetDistanceEntry()->GetOnParamChangedDelegate().BindRaw(this,&FBrightEyeManagerImp::OnScalarParamChanged,EBEScalarParamType::Distance);
-	ControlPanelWidget->GetRadiusEntry()->GetOnParamChangedDelegate().BindRaw(this,&FBrightEyeManagerImp::OnScalarParamChanged,EBEScalarParamType::Radius);
-	ControlPanelWidget->GetColorPicker()->GetOnParamChangedDelegate().BindRaw(this,&FBrightEyeManagerImp::OnColorParamChanged);
-	ControlPanelWidget->GetOnDelayStateChanged().BindRaw(this,&FBrightEyeManagerImp::OnSmoothRotationToggled);
+	ControlPanelWidget->GetOnDelayStateChanged().BindRaw(this, &FBrightEyeManagerImp::OnSmoothRotationToggled);
+
 }
 
 void FBrightEyeManagerImp::InitializePanelParams() const
@@ -675,7 +694,10 @@ void FBrightEyeManagerImp::CreateAndShowControlPanel()
         
 	if (ActiveLevelViewport.IsValid() && IsValid(GetControlPanel()))
 	{
-		ActiveLevelViewport->AddOverlayWidget(GetControlPanel()->TakeWidget());
+		ActiveLevelViewport->AddOverlayWidget(ControlPanelWidget->TakeWidget());
+		
+		RefreshColorPicker();
+		
 		ControlPanelWidget->SetIsOnTheScreen(true);
 	}
 }

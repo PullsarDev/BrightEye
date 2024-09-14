@@ -6,9 +6,14 @@
 #include "Data/ColorPicker.h"
 
 
-void UBEControlPanel::InitializePanel()
+bool UBEControlPanel::InitializeTheColorPicker()
 {
-	ColorPicker = NewObject<UBEColorPicker>(this);
+	if(!IsValid(ColorPicker))
+	{
+		ColorPicker = NewObject<UBEColorPicker>(this);
+		return true;
+	}
+	return false;
 }
 
 void UBEControlPanel::NativeDestruct()
