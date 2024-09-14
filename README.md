@@ -61,13 +61,13 @@ This method installs the plugin directly into the Unreal Engine installation, ma
 
 1. **Download the Plugin**: Go to the [Releases](https://github.com/PullsarDev/BrightEye/releases/tag/V1.0) page and download the binary ZIP file for your Unreal Engine version from the **Assets** section at the bottom of the page.
 2. **Unzip the Files**: Extract the downloaded ZIP file.
-3. **Move the Plugin**: Copy the `BrightEye` folder into your Unreal Engine installation's `Plugins` directory:
+3. **Move the Plugin**: Copy the `BrightEye` folder into your Unreal Engine installation's `Engine/Plugins/Marketplace` directory:
 ```
 UE_Path/
 ├── Engine/
 │   └── Plugins/
-│         └── Editor/
-│               └── BrightEye
+│         └── Marketplace/
+│                  └── BrightEye
 ```
 4. **Enable the Plugin**: Open any project in Unreal Engine, go to `Edit` > `Plugins`, and enable the **Bright Eye** plugin.
 5. **Restart the Editor**: After enabling the plugin, restart Unreal Engine to apply the changes.
