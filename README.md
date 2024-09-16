@@ -35,7 +35,7 @@ There are two ways to install the **Bright Eye** plugin:
 
 This method installs the plugin only for a specific project, making it available only within that particular project.
 
-1. **Download the Plugin**: Go to the [Releases](https://github.com/PullsarDev/BrightEye/releases/tag/V1.0) page and download the binary ZIP file for your Unreal Engine version from the **Assets** section at the bottom of the page.
+1. **Download the Plugin**: Go to the [Releases](https://github.com/PullsarDev/BrightEye/releases) page and download the binary ZIP file for your Unreal Engine version from the **Assets** section at the bottom of the page.
 2. **Unzip the Files**: Extract the downloaded ZIP file.
 3. **Move the Plugin**: Copy the `BrightEye` folder into your project's `Plugins` directory:
 ```
@@ -59,7 +59,7 @@ YourProject/
 
 This method installs the plugin directly into the Unreal Engine installation, making it available for all projects that use this engine version.
 
-1. **Download the Plugin**: Go to the [Releases](https://github.com/PullsarDev/BrightEye/releases/tag/V1.0) page and download the binary ZIP file for your Unreal Engine version from the **Assets** section at the bottom of the page.
+1. **Download the Plugin**: Go to the [Releases](https://github.com/PullsarDev/BrightEye/releases) page and download the binary ZIP file for your Unreal Engine version from the **Assets** section at the bottom of the page.
 2. **Unzip the Files**: Extract the downloaded ZIP file.
 3. **Move the Plugin**: Copy the `BrightEye` folder into your Unreal Engine installation's `Engine/Plugins/Marketplace` directory:
 ```
