@@ -405,11 +405,14 @@ void FBrightEyeManagerImp::ResetBrightEyeRotation()
 
 void FBrightEyeManagerImp::ActivateInputProcessor()
 {
-	InputProcessor = MakeShared<FBEInputPreProcessor>();
-	InputProcessor->OnKeySelected.BindRaw(this, &FBrightEyeManagerImp::HandleKeySelected);
-	InputProcessor->OnKeReleased.BindRaw(this, &FBrightEyeManagerImp::HandleKeyReleased);
+	if (FSlateApplication::IsInitialized())
+	{
+		InputProcessor = MakeShared<FBEInputPreProcessor>();
+		InputProcessor->OnKeySelected.BindRaw(this, &FBrightEyeManagerImp::HandleKeySelected);
+		InputProcessor->OnKeReleased.BindRaw(this, &FBrightEyeManagerImp::HandleKeyReleased);
 	
-	FSlateApplication::Get().RegisterInputPreProcessor(InputProcessor, 0);
+		FSlateApplication::Get().RegisterInputPreProcessor(InputProcessor, 0);
+	}
 }
 
 void FBrightEyeManagerImp::DeactivateInputProcessor()
