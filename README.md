@@ -2,6 +2,8 @@
 
 **Bright Eye** is a lightweight and free Unreal Engine plugin designed for level designers and artists who need an easily accessible light source while working within the editor. It attaches a light source directly to the viewport camera, allowing users to quickly illuminate dark areas without the need to place temporary lights. By providing customizable shortcuts and settings, Bright Eye offers a flexible workflow that adapts to the user's needs, streamlining the level design process.
 
+You can get the plugin from the [Releases](https://github.com/PullsarDev/BrightEye/releases) section. It is also available on the [Unreal Engine Marketplace](https://www.unrealengine.com/marketplace/en-US/product/bright-eye) and [Cosmos Marketplace](https://cosmos.leartesstudios.com/products/plsr-bright-eye).
+
 ## Table of Contents
 <a href="https://youtu.be/81p3FSxmOLA" target="_blank">
   <img align="right" width="50%" src="https://github.com/user-attachments/assets/8c8eb572-5330-4328-9726-fc8f7e7556a5" alt="Watch Bright Eye Plugin Tutorial on YouTube">
