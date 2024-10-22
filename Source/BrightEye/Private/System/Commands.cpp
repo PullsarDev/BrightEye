@@ -3,12 +3,10 @@
 
 #include "Commands.h"
 
-#define LOCTEXT_NAMESPACE "FCameraManagerModule"
-
 void FBECommands::RegisterCommands()
 {
 	{
-		const FText Label = FText::FromString(TEXT("Toggle BrightEye"));
+		const FText Label = FText::FromString(TEXT("Toggle Bright Eye"));
 		const FText Desc = FText::FromString(TEXT("Toggles the BrightEye"));
 
 		FUICommandInfo::MakeCommandInfo(
@@ -20,6 +18,20 @@ void FBECommands::RegisterCommands()
 			FSlateIcon(),
 			EUserInterfaceActionType::Button,
 			FInputChord(EKeys::T));
+	}
+	{
+		const FText Label = FText::FromString(TEXT("Aim Bright Eye"));
+		const FText Desc = FText::FromString(TEXT("Directs the BrightEye light towards the mouse cursor while held."));
+
+		FUICommandInfo::MakeCommandInfo(
+			this->AsShared(),
+			AimBrightEye,
+			"AimBrightEye",
+			Label,
+			Desc,
+			FSlateIcon(),
+			EUserInterfaceActionType::Button,
+			FInputChord(EKeys::F, EModifierKey::Control));
 	}
 	{
 		const FText Label = FText::FromString(TEXT("Toggle Control Panel"));

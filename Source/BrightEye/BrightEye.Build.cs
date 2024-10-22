@@ -16,6 +16,11 @@ public class BrightEye : ModuleRules
 			}
 			);
 		
+		if (Target.Version.MajorVersion == 5 && Target.Version.MinorVersion <= 0)
+		{
+			PublicDependencyModuleNames.Add("EditorStyle");
+		}
+		
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
@@ -24,11 +29,12 @@ public class BrightEye : ModuleRules
 				"Slate",
 				"SlateCore",
 				"UnrealEd",
+				"EditorFramework",
 				"LevelEditor",
 				"Projects",
 				"AppFramework",
 				"UMG"
 			}
-			);
+		);
 	}
 }

@@ -4,6 +4,8 @@
 #include "BrightEyeSettings.h"
 #include "Interfaces/IPluginManager.h"
 
+
+
 UBESettings* UBESettings::SingletonInstance = nullptr;
 
 UBESettings* UBESettings::GetInstance()
@@ -27,8 +29,10 @@ void UBESettings::ResetToolSettings()
 	Color = FLinearColor::White;
 	bActivateLightOnPress = false;
 	bHidePanelWhenIdle = false;
-	bSmoothCameraRotation = false;
+	bSmoothLightRotation = false;
 	RotationDelayFactor = 0.4f;
+	LightViewOffset = FVector2D();
+	LightProfile = nullptr;
 	
 	if(OnResetBrightEyeSettings.IsBound())
 	{
@@ -46,19 +50,30 @@ void UBESettings::OpenDocumentation() const
 	}
 }
 
+FString NormalizeConfigPath(const FString& FilePath)
+{
+#if (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1)
+	return FConfigCacheIni::NormalizeConfigIniPath(FilePath);
+#else
+	FString NormalizedPath = FilePath;
+	FPaths::RemoveDuplicateSlashes(NormalizedPath);
+	return FPaths::CreateStandardFilename(NormalizedPath);
+#endif
+}
+
 void UBESettings::SaveToolConfig()
 {
 	const FString PluginConfigDir = IPluginManager::Get().FindPlugin(TEXT("BrightEye"))->GetBaseDir() / "Config";
 	FString PluginConfigFile = FPaths::Combine(PluginConfigDir, TEXT("BrightEyeSettings.ini"));
-	SaveConfig(CPF_Config, *FConfigCacheIni::NormalizeConfigIniPath(PluginConfigFile));
-	
+	FString NormalizedConfigFile = NormalizeConfigPath(PluginConfigFile);
+	SaveConfig(CPF_Config, *NormalizedConfigFile);
 }
 
+ 
 void UBESettings::LoadToolConfig()
 {
 	const FString PluginConfigDir = IPluginManager::Get().FindPlugin(TEXT("BrightEye"))->GetBaseDir() / "Config";
-	FString PluginConfigFile = FConfigCacheIni::NormalizeConfigIniPath(FPaths::Combine(PluginConfigDir, TEXT("BrightEyeSettings.ini")));
-
+	FString PluginConfigFile = NormalizeConfigPath(FPaths::Combine(PluginConfigDir, TEXT("BrightEyeSettings.ini")));
 	if (FPaths::FileExists(PluginConfigFile))
 	{
 		LoadConfig(GetClass(), *PluginConfigFile);
@@ -68,7 +83,6 @@ void UBESettings::LoadToolConfig()
 		LoadConfig();
 	}
 }
-
 
 void UBESettings::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {

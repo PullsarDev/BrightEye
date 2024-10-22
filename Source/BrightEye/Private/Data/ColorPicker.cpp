@@ -1,17 +1,11 @@
 ﻿// Copyright (c) 2024 PullsarDev - GitHub: https://github.com/PullsarDev
 
-#include "ColorPicker.h"
 
-#include "Blueprint/UserWidget.h"
-#include "Widgets/SBoxPanel.h"
+#include "ColorPicker.h"
 #include "Widgets/SOverlay.h"
+#include "Widgets/SBoxPanel.h"
 #include "Widgets/Colors/SColorPicker.h"
 #include "Widgets/Layout/SBorder.h"
-
-void UBEColorPicker::InitializeParent(const TSharedRef<SWidget>& InParent)
-{
-    Parent = InParent.ToSharedPtr();
-}
 
 void UBEColorPicker::InitializeColor(const FLinearColor& InInitialValue)
 {
@@ -59,11 +53,6 @@ void UBEColorPicker::OnColorPickerInteractiveBegin()
     SelectedColor = FormalColor;
 }
 
-void UBEColorPicker::OnColorPickerInteractiveEnd()
-{
-    //No action required
-}
-
 FReply UBEColorPicker::OnMouseButtonDownColorBlock(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
 {
     if (MouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
@@ -76,32 +65,28 @@ FReply UBEColorPicker::OnMouseButtonDownColorBlock(const FGeometry& MyGeometry, 
 
 void UBEColorPicker::OpenColorPickerInternal()
 {
-    auto Test = Cast<UUserWidget>(GetOuter());
-    if(!IsValid(Test)){return;}
-    auto Ref = Cast<UUserWidget>(GetOuter())->TakeWidget();
-    
+    if(!FSlateApplication::IsInitialized()){ return; }
+
     FColorPickerArgs PickerArgs;
     PickerArgs.bUseAlpha = true;
     PickerArgs.bOnlyRefreshOnMouseUp = false;
     PickerArgs.bOnlyRefreshOnOk = false;
+#if (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 2)
     PickerArgs.InitialColor = OnGetColorForColorBlock();
+#else
+    PickerArgs.InitialColorOverride = OnGetColorForColorBlock();
+#endif
     PickerArgs.sRGBOverride = true;
     PickerArgs.bUseAlpha = false;
     PickerArgs.OnColorCommitted = FOnLinearColorValueChanged::CreateUObject(this, &UBEColorPicker::ColorPicked);
     PickerArgs.OnColorPickerCancelled = FOnColorPickerCancelled::CreateUObject(this, &UBEColorPicker::OnColorPickerCancelled);
     PickerArgs.OnColorPickerWindowClosed = FOnWindowClosed::CreateUObject(this, &UBEColorPicker::OnColorPickerWindowClosed);
     PickerArgs.OnInteractivePickBegin = FSimpleDelegate::CreateUObject(this, &UBEColorPicker::OnColorPickerInteractiveBegin);
-    PickerArgs.OnInteractivePickEnd = FSimpleDelegate::CreateUObject(this, &UBEColorPicker::OnColorPickerInteractiveEnd);
-    //PickerArgs.ParentWidget = ColorBlock;
-    PickerArgs.OptionalOwningDetailsView = Ref;
-    FWidgetPath ParentWidgetPath;
-    if (FSlateApplication::Get().FindPathToWidget(Ref, ParentWidgetPath))
-    {
-        PickerArgs.bOpenAsMenu = FSlateApplication::Get().FindMenuInWidgetPath(ParentWidgetPath).IsValid();
-    }
+    PickerArgs.bOpenAsMenu = false;
     
-    OpenColorPicker(PickerArgs);  // Call the global OpenColorPicker function
+    OpenColorPicker(PickerArgs);
 }
+
 
 void UBEColorPicker::ColorPicked(FLinearColor NewColor)
 {

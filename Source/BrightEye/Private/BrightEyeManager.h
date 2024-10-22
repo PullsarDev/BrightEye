@@ -1,11 +1,13 @@
 ﻿// Copyright (c) 2024 PullsarDev - GitHub: https://github.com/PullsarDev
 
+
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UnrealEdMisc.h"
 
+class SBrightEyePanel;
 class UBESettings;
-class UBEControlPanel;
 class SBEControlPanel;
 class USpotLightComponent;
 class SLevelViewport;
@@ -23,94 +25,120 @@ enum class EBEScalarParamType
 class FBrightEyeManagerImp : public TSharedFromThis<FBrightEyeManagerImp>
 {
 public:
-	void Initialize();
-	void Shutdown();
-	
-	void SetupDelegates();
-	void RemoveDelegates() const;
-	
+    // Initialization and Shutdown
+    void Initialize();
+    void Shutdown();
+
+    // Delegate setup
+    void SetupDelegates();
+    void RemoveDelegates() const;
+
 private:
-	void OnMapChanged(UWorld* World, EMapChangeType MapChangeType);
-	auto OnActorSelectionChanged(const TArray<UObject*>& InActors, bool bIsSelected) const -> void;
-	
-	TWeakPtr<SLevelViewport> ActiveViewport;
-	TWeakObjectPtr<AActor> ActiveActorLock;
-	FTSTicker::FDelegateHandle TickHandle;
-	bool OnTick(float DeltaTime);
-
-	void OnActiveViewportChanged(TSharedPtr<IAssetViewport> OldViewport, TSharedPtr<IAssetViewport> NewViewport);
-	
-	void InitCommands();
-	void OnToggleLight();
-	void OnToggleControlPanel();
-	
-	void CreateBrightLight();
-	void DestroyBrightLight();
-	void UpdateLightTransformWithViewport(const float& InDeltaTime);
-	
-	UUserWidget* GetControlPanel();
-
-	void InitializePanel();
-	void RefreshColorPicker();
-	void BindPanelDelegates();
-	void UnbindPanelDelegates() const;
-	void InitializePanelParams() const;
-	
-	void CreateAndShowControlPanel();
-	void RemoveControlPanel() const;
-	void DestroyControlPanel();
-	
-	FRotator BrightEyeRotation;
-	void ResetBrightEyeRotation();
-	
-#pragma region InputPreProcessor
+    void HandleBeginPIE(bool bIsSimulating);
     
-	void ActivateInputProcessor();
-	void DeactivateInputProcessor();
+    // Tick function
+    bool OnTick(float InDeltaTime);
     
-	TSharedPtr<class FBEInputPreProcessor> InputProcessor;
-	
-protected:
-	bool HandleKeySelected(const FKeyEvent& InKey);
-	bool HandleKeyReleased(const FKeyEvent& InKey);
-private:
-	bool bIsPressed = true;
-
-#pragma endregion InputPreProcessor
+    // Input handling
+    void ActivateInputProcessor();
+    void DeactivateInputProcessor();
+    bool HandleKeySelected(const FKeyEvent& InKey);
+    bool HandleKeyReleased(const FKeyEvent& InKey);
     
-	TSharedPtr<class FUICommandList> CameraLevelCommands;
+    // Light management
+    void CreateBrightEyeLight();
+    void DestroyBrightLight();
+    void UpdateLightTransformWithViewport(const float& InDeltaTime);
+    void UpdateBrightEyeSpecs() const;
+    void UpdateBrightness() const;
+    void UpdateRadius() const;
+    void UpdateDistance() const;
+    void UpdateColor() const;
+    void UpdateLightProfile() const;
+    void UpdateLightViewOffsetOnPanel() const;
+    void ResetBrightEyeRotation();
+    
+    // Bright Eye Panel management
+    void InitializePanel();
+    void CreateBrightEyePanel();
+    void DestroyBrightEyePanel();
+    void TryRevealBrightEyePanel();
+    void TryHideBrightEyePanel();
+    void UpdateBrightEyePanelLocation(FVector2D InLocation);
+    FMargin GetBrightEyePanelPadding() const;
+    void ResetPanelLocation();
+    void RefreshColorPicker();
+    void InitializePanelParams() const;
 
-	TObjectPtr<AActor> BrightEyeActor;
-	TObjectPtr<USpotLightComponent> BrightEyeComponent;
-	TObjectPtr<UBEControlPanel> ControlPanelWidget;
+    // Scalar and color parameter changes
+    void OnScalarParamChanged(const float& InNewParam, EBEScalarParamType InParamType);
+    void OnColorParamChanged(const FLinearColor& InNewColor);
+    void OnSmoothRotationToggled();
+    void OnBrightEyeSettingsChangedOnEditorSettings(const FPropertyChangedEvent& InPropertyChangedEvent);
+    void OnResetBrightEyeSettings() const;
+    
+    // Panel dragging and drop checking
+    void OnPanelDragStarted();
+    void OnPanelDragFinished(const FVector2D& InDropLocation);
+    void CheckForOutOfBoundDropping(const float& InDeltaTime);
 
-	void OnScalarParamChanged(const float& InNewParam, EBEScalarParamType InParamType);
-	void OnColorParamChanged(const FLinearColor& InNewColor);
-	void OnSmoothRotationToggled();
-	
-	void OnBrightEyeSettingsChangedOnEditorSettings(const FPropertyChangedEvent& InPropertyChangedEvent);
-	void OnResetBrightEyeSettings() const;
+    // Panel dragging and drop checking
+    void OnCoordsChanged(const FVector2D& InNewCoords);
 
-	void UpdateBrightEyeSpecs() const;
-	void UpdateBrightness() const;
-	void UpdateRadius() const;
-	void UpdateDistance() const;
-	void UpdateColor() const;
+    
+    // Viewport management
+    void OnActiveViewportChanged(TSharedPtr<IAssetViewport> OldViewport, TSharedPtr<IAssetViewport> NewViewport);
+    void OnMapChanged(UWorld* World, EMapChangeType MapChangeType);
+    void OnActorSelectionChanged(const TArray<UObject*>& InActors, bool bIsSelected) const;
 
+    // Light modification state
+    void ResetLightModificationState();
+    void ForceViewportRedraw() const;
 
-	bool bLightSettingsModified = false;
-	float TimeSinceLastModification = 0.0f;
+    // Command initialization
+    void InitCommands(); 
+    void OnToggleLight();  
+    void OnToggleBrightEyePanel();
+    void InvalidateViewport() const;
+    void SetLightVisibility(bool bVisible) const;
+    void OnAimBrightEye();
 
-	void ResetLightModificationState();
+    static bool IsInPie();
 
-	void ForceViewportRedraw() const;
+    // Light-related variables
+    TObjectPtr<AActor> BrightEyeActor;
+    TObjectPtr<USpotLightComponent> BrightEyeComponent;
+    FRotator BrightEyeRotation;
+    bool bLightSettingsModified = false;
+    float TimeSinceLastModification = 0.0f;
+
+    // Panel-related variables
+    TSharedPtr<SWidget> BrightEyePanelParent;
+    TSharedPtr<class SBrightEyePanel> BrightEyePanel;
+    FVector2D BEPanelLocation = FVector2D();
+    float PanelDropTimer  = 0;
+    bool bIsDragging = false;
+    bool bIsAimLighting = false;
+    bool bIsLightActiveBeforeAiming = false;
+    bool bCheckingForDrop = false;
+    bool bIsPanelOnWindow = false;
+
+    // Input processing
+    bool bIsAnyControlKeyPressed = true;
+    TSharedPtr<class FBEInputPreProcessor> InputProcessor;
+    TSharedPtr<class FUICommandList> CameraLevelCommands;
+    
+    // Viewport tracking
+    TWeakPtr<SLevelViewport> ActiveViewport;
+    FTSTicker::FDelegateHandle TickHandle;
 };
 
 class FBrightEyeManager
 {
 public:
-	static void Initialize();
-	static void Shutdown();
-	static TSharedPtr<FBrightEyeManagerImp> BrightEyeManagerImp;
+    static void Initialize();
+    static void Shutdown();
+    static TSharedPtr<FBrightEyeManagerImp> BrightEyeManagerImp;
 };
+
 

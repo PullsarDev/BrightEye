@@ -1,5 +1,6 @@
 // Copyright (c) 2024 PullsarDev - GitHub: https://github.com/PullsarDev
 
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -8,7 +9,6 @@
 class FBrightEyeModule : public IModuleInterface
 {
 public:
-
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;

@@ -1,17 +1,16 @@
 {
 	"FileVersion": 3,
-	"Version": 2,
-	"VersionName": "1.0.1",
+	"Version": 4,
+	"VersionName": "1.1.1",
 	"FriendlyName": "Bright Eye",
 	"Description": "A customizable light source for the viewport camera, providing real-time lighting adjustments to enhance level design visibility.",
 	"Category": "Level Design",
 	"CreatedBy": "PullsarDev",
 	"CreatedByURL": "https://www.pullsar.dev",
 	"DocsURL": "https://drive.google.com/file/d/1m-7RTSe4mykxfXDtTGsZ8CNrN5heEUjC/view",
-	"MarketplaceURL": "",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/22a12e5d62574f8fbc022c6c1bc7f581",
 	"SupportURL": "pullsarb@gmail.com",
-	"EngineVersion": "5.3.0",
-	"CanContainContent": true,
+	"CanContainContent": false,
 	"Installed": true,
 	"Modules": [
 		{
