@@ -1,11 +1,16 @@
 ﻿// Copyright (c) 2024 PullsarDev - GitHub: https://github.com/PullsarDev
 
+
 #pragma once
 
 #include "Framework/Application/IInputProcessor.h"
 #include "Input/Events.h"
 
 
+/**
+ * FBEInputPreProcessor handles custom input processing for key and mouse events in the Slate UI system.
+ * It allows capturing and processing specific input events like key presses, mouse clicks, and scrolls.
+ */
 class FBEInputPreProcessor : public IInputProcessor
 {
 public:

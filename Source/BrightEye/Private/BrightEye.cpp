@@ -1,14 +1,18 @@
 // Copyright (c) 2024 PullsarDev - GitHub: https://github.com/PullsarDev
 
+
 #include "BrightEye.h"
 #include "BrightEyeManager.h"
 #include "ISettingsModule.h"
 #include "Data/BrightEyeSettings.h"
+#include "System/BrightEyeStyle.h"
 
 #define LOCTEXT_NAMESPACE "FBrightEyeModule"
 
 void FBrightEyeModule::StartupModule()
 {
+	FBrightEyeStyle::InitializeToolStyle();
+
 	RegisterToolSettings();
 	
 	FBrightEyeManager::Initialize();
@@ -19,14 +23,15 @@ void FBrightEyeModule::ShutdownModule()
 	FBrightEyeManager::Shutdown();
 
 	UnregisterToolSettings();
-	
+
+	FBrightEyeStyle::ShutDownStyle();
 }
 
 
 void FBrightEyeModule::RegisterToolSettings()
 {
 	UBESettings* Config = UBESettings::GetInstance();
-
+ 
 	if (ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings"))
 	{
 		SettingsModule->RegisterSettings("Editor", "Plugins", "Bright Eye",

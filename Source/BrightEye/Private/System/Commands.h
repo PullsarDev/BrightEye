@@ -1,5 +1,6 @@
 ﻿// Copyright (c) 2024 PullsarDev - GitHub: https://github.com/PullsarDev
 
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -22,4 +23,5 @@ public:
 
 	TSharedPtr<FUICommandInfo> ToggleBrightEye;
 	TSharedPtr<FUICommandInfo> ToggleControlPanel;
+	TSharedPtr<FUICommandInfo> AimBrightEye;
 };

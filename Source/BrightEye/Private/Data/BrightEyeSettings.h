@@ -1,5 +1,6 @@
 ﻿// Copyright (c) 2024 PullsarDev - GitHub: https://github.com/PullsarDev
 
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -13,7 +14,6 @@ DECLARE_DELEGATE(FOnResetBrightEyeSettings)
  * Stores configuration settings for the Bright Eye tool, including brightness, radius, distance, and color parameters.
  * This class allows for editing and saving tool-specific settings, with options for smoothing camera rotation and handling light visibility through keypresses.
  */
-
 UCLASS(config = BrightEyeConfig)
 class BRIGHTEYE_API UBESettings : public UObject
 {
@@ -50,15 +50,23 @@ public:
 	UPROPERTY(EditAnywhere, config, Category = "Bright Eye",meta=(ToolTip = "Hold to keep the panel visible, or to<ggle on/off with a key press."))
 	bool bHidePanelWhenIdle = false;
 	
-	UPROPERTY(EditAnywhere, config, Category = "Bright Eye", meta = (UIMin = 1, ToolTip = "Smooth the camera rotation by adding a slight delay."))
-	bool bSmoothCameraRotation = false;
+	UPROPERTY(EditAnywhere, config, Category = "Bright Eye", meta = (UIMin = 1, ToolTip = "Smooth the light rotation by adding a slight delay."))
+	bool bSmoothLightRotation = false;
 
-	UPROPERTY(EditAnywhere, config, Category = "Bright Eye", meta = (UIMin = 0.0, UIMax = 1.0, ClampMin = 0.0, ClampMax = 1.0, EditCondition="bSmoothCameraRotation", ToolTip = "Set the delay factor for smoothing the camera rotation. Higher values result in more delay."))
+	UPROPERTY(EditAnywhere, config, Category = "Bright Eye", meta = (UIMin = 0.0, UIMax = 1.0, ClampMin = 0.0, ClampMax = 1.0, EditCondition="bSmoothLightRotation", ToolTip = "Set the delay factor for smoothing the camera rotation. Higher values result in more delay."))
 	float RotationDelayFactor = 0.4f;
-		
+
+	UPROPERTY(EditAnywhere, config, Category = "Bright Eye", meta = (UIMin = -100.0f, UIMax = 100.0f, ClampMin = -100.0f, ClampMax = 100.0f, ToolTip = "Adjust the light offset relative to the camera's view, allowing fine-tuning of its position in the scene."))
+	FVector2D LightViewOffset = FVector2D(); 
+
+	UPROPERTY(EditAnywhere, config, Category = "Bright Eye", meta = (ToolTip = "Select a light profile (IES texture) to adjust the characteristics of the light's shape and distribution."))
+	TSoftObjectPtr<UTextureLightProfile> LightProfile = nullptr;
+
+	/* Resets the Bright Eye tool settings to their default values. */
 	UFUNCTION(CallInEditor,Category = "Bright Eye")
 	void ResetToolSettings();
 
+	/* Opens the Bright Eye documentation in a web browser. */
 	UFUNCTION(CallInEditor,Category = "Bright Eye")
 	void OpenDocumentation() const;
 	
