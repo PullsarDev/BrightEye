@@ -875,6 +875,7 @@ void FBrightEyeManagerImp::CreateBrightEyePanel()
 		.Padding(TAttribute<FMargin>(this, &FBrightEyeManagerImp::GetBrightEyePanelPadding))
 		[
 			SAssignNew(BrightEyePanel, SBrightEyePanel)
+			.Owner(BrightEyeActor)
 			.OnPanelDragStarted_Raw(this, &FBrightEyeManagerImp::OnPanelDragStarted)
 			.OnPanelDragFinished_Raw(this, &FBrightEyeManagerImp::OnPanelDragFinished)
 			.OnBrightnessChanged_Raw(this, &FBrightEyeManagerImp::OnScalarParamChanged, EBEScalarParamType::Brightness)

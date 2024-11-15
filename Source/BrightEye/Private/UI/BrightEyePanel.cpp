@@ -21,13 +21,12 @@ constexpr float DefaultStartDelay = 0.8f;
 
 void SBrightEyePanel::Construct(const FArguments& InArgs)
 {
+	Owner = InArgs._Owner;
 	OnPanelDragStartedSignature = InArgs._OnPanelDragStarted;
 	OnPanelDragFinishedSignature = InArgs._OnPanelDragFinished;
-	
 	OnBrightnessChangedSignature = InArgs._OnBrightnessChanged;
 	OnRadiusChangedSignature = InArgs._OnRadiusChanged;
 	OnDistanceChangedSignature = InArgs._OnDistanceChanged;
-	
 	OnSmoothRotationStateChanged = InArgs._OnSmoothRotationStateChanged;
 
 	const FSlateBrush* SRSlateBrush = GetSmoothRotationButtonImage();
@@ -252,10 +251,9 @@ FReply SBrightEyePanel::OnColorButtonClicked() const
 
 bool SBrightEyePanel::InitializeTheColorPicker()
 {
-	if(!IsValid(ColorPicker))
+	if (!IsValid(ColorPicker) && Owner.IsValid())
 	{
-		ColorPicker = NewObject<UBEColorPicker>();
-		ColorPicker->AddToRoot();
+		ColorPicker = NewObject<UBEColorPicker>(Owner.Get());
 		return true;
 	}
 	return false;
@@ -417,14 +415,5 @@ SBrightEyePanel::~SBrightEyePanel()
 	{
 		delete FadeOutManager; 
 		FadeOutManager = nullptr;
-	}
-
-	if(IsValid(ColorPicker))
-	{
-		if(ColorPicker->IsRooted())
-		{
-			ColorPicker->RemoveFromRoot();
-		}
-		ColorPicker = nullptr;
 	}
 }

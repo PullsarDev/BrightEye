@@ -27,6 +27,7 @@ class BRIGHTEYE_API SBrightEyePanel final : public SCompoundWidget
 {
 public:
 	SLATE_BEGIN_ARGS(SBrightEyePanel){}
+	SLATE_ARGUMENT(UObject*, Owner);
 	SLATE_EVENT(FOnPanelDragStartedSignature, OnPanelDragStarted)
 	SLATE_EVENT(FOnPanelDragFinishedSignature, OnPanelDragFinished)
 	SLATE_EVENT(FOnScalarValueChangedSignature, OnBrightnessChanged)
@@ -35,8 +36,7 @@ public:
 	SLATE_EVENT(FOnCoordChangedSignature, OnCoordsChanged)
 	SLATE_EVENT(FOnSmoothRotationStateChangedSignature, OnSmoothRotationStateChanged)
 SLATE_END_ARGS()
-
-
+	
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
 	
@@ -47,6 +47,8 @@ SLATE_END_ARGS()
 	UBEColorPicker* GetColorPicker();
 	
 private:
+	TWeakObjectPtr<UObject> Owner;
+	
 	TSharedPtr<SScalarEntryWidget> BrightnessEntry;
 	TSharedPtr<SScalarEntryWidget> RadiusEntry;
 	TSharedPtr<SScalarEntryWidget> DistanceEntry;

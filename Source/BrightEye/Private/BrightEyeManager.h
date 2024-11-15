@@ -108,7 +108,7 @@ private:
     // Light-related variables
     TObjectPtr<AActor> BrightEyeActor;
     TObjectPtr<USpotLightComponent> BrightEyeComponent;
-    FRotator BrightEyeRotation;
+    FRotator BrightEyeRotation = FRotator();
     bool bLightSettingsModified = false;
     float TimeSinceLastModification = 0.0f;
 

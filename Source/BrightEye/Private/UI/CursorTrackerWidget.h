@@ -30,10 +30,10 @@ public:
 	virtual FVector2D ComputeDesiredSize(float) const override;
 	
 private:
-	FVector2D LightPosition;
+	FVector2D LightPosition = FVector2D();
 	bool bIsDragging = false;
 	float SnapThreshold = 0.05f; 
-	FVector2D Coordinates;   
+	FVector2D Coordinates = FVector2D();
 	FOnCoordChangedSignature OnCoordChangedSignature;
 	
 	void CalculateCoordinates(const FVector2D& Position, const FVector2D& WidgetSize);
