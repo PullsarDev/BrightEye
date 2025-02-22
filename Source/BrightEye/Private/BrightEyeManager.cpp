@@ -498,7 +498,11 @@ bool FBrightEyeManagerImp::HandleKeySelected(const FKeyEvent& InKey)
 	
 	bIsAnyControlKeyPressed = true;
 	
-	return CameraLevelCommands->ProcessCommandBindings(InKey);
+	if (ActiveViewport.IsValid() && ActiveViewport.Pin()->GetActiveViewport()->HasFocus())
+	{
+		return CameraLevelCommands->ProcessCommandBindings(InKey);
+	}
+	return false;
 }
 
 
@@ -542,7 +546,7 @@ bool FBrightEyeManagerImp::HandleKeyReleased(const FKeyEvent& InKey)
 			}
 		}
 	}
-	if(CameraLevelCommands.IsValid())
+	if (CameraLevelCommands.IsValid() && ActiveViewport.IsValid() && ActiveViewport.Pin()->GetActiveViewport()->HasFocus())
 	{
 		return CameraLevelCommands->ProcessCommandBindings(InKey);
 	}
