@@ -773,7 +773,7 @@ void FBrightEyeManagerImp::UpdateLightTransformWithViewport(const float& InDelta
 		if(bIsAimLighting)
 		{
 			FVector MouseHitLocation;
-			LightLocation - FGeometryUtils::GetHitLocationFromCameraAndMouse(MouseHitLocation);
+			FGeometryUtils::GetHitLocationFromCameraAndMouse(MouseHitLocation);
 
 			FRotator LookRotation = (MouseHitLocation - LightLocation).Rotation();
 			
